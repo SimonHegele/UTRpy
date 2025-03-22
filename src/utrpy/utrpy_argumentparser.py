@@ -2,7 +2,6 @@ from argparse import ArgumentParser
 
 class UTRpyArgparser(ArgumentParser):
 
-
     prog        =   "utrpy"
 
     description = ( "Genome annotions from protein orthology based gene prediction tools"
