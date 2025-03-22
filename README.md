@@ -54,7 +54,7 @@ options:
 1. **maximum_exon_length**<br>
 To my best knowlege the longest confirmed exon is of the MUC16 gene and has a length of<br>
 ~21kb (https://doi.org/10.1093/nar/gks652). One might therefore pose a limit on the exon<br>
-lengths to prevent the use of falsely assembled transcripts.
+lengths to prevent the use of false exons.
 2. **minimum_exon_overlap**<br>
 Minimum overlap length of pairs of exons to be further investigated. Increasing the value<br>
 increases speed at the cost of sensitivity.
