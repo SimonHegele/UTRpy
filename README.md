@@ -9,9 +9,9 @@ tools using exons in genome annotations from reference based transcriptome assem
   <em>UTRpy workflow</em>
 </p>
 
-Given an exon from the transcriptome assembly (exon_ta) and an exon from the genome<br>
-prediction (exon_gp) and its corresponding transcript (tran_gp) we decide if exon_ta is a<br>
-suitable replacement for exon_gp based on following criteria:
+Given a pair of overlapping exons including an exon from the transcriptome assembly (exon_ta)<br>
+and an exon from the genome prediction (exon_gp) and its corresponding transcript (tran_gp)<br>
+we decide if exon_ta is a suitable replacement for exon_gp based on following criteria:
 1. The length of exon_ta does not exceed a certain limit
 2. Their strand information must match (More details in the Parameters-section)
 3. Exon_ta and exon_gp have either shared start or end positions
