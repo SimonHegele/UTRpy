@@ -30,7 +30,7 @@ pip install .
 ```
 usage: utrpy [-h] [-mel MAXIMUM_EXON_LENGTH] [-meo MINIMUM_EXON_OVERLAP] [-t THREADS] [-c] gff_prediction gff_assembly gff_utrpy
 
-Genome annotions from protein orthology based gene prediction tools lack UTRs. Exons in these kind of gene annotations can be extended toalso cover UTRs using exons generated with reference based assemblytools
+Genome annotions from protein orthology based gene prediction tools lack UTRs. Exons in these kind of gene annotations can be extended toalso cover UTRs using exons generated with reference based assembly tools
 such as StringTie.
 
 positional arguments:
