@@ -41,7 +41,7 @@ positional arguments:
 options:
   -h, --help            show this help message and exit
   -mel MAXIMUM_EXON_LENGTH, --maximum_exon_length MAXIMUM_EXON_LENGTH
-                        Maximum exon length prevents the use of unreasonably long exons. [Default:25000]
+                        Maximum exon length prevents the use of unreasonably long exons. [Default:20000]
   -meo MINIMUM_EXON_OVERLAP, --minimum_exon_overlap MINIMUM_EXON_OVERLAP
                         Minimum overlap of exons to be considered [Default:3]
   -t THREADS, --threads THREADS
@@ -51,7 +51,7 @@ options:
 
 ### Parameters
 
-1. **maximum_exon_length**
+1. **maximum_exon_length**<br>
 To my best knowlege the longest confirmed exon is of the MUC16 gene and has a length of<br>
 ~21kb (https://doi.org/10.1093/nar/gks652). One might therefore pose a limit on the exon<br>
 lengths to prevent the use of falsely assembled transcripts.
