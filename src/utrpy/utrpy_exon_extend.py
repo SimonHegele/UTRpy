@@ -14,7 +14,7 @@ def extends_transcript(ta_exon: Series,
     given transcript
 
     Args:
-        ta_exon (Series):    A pandas Series, an exon from thetranscriptome assembly
+        ta_exon (Series):    A pandas Series, an exon from the transcriptome assembly
         gp_exon (Series):    A pandas Series, an exon from the gene prediction
         tran (Series):       A pandas Series, a transcript from the gene prediction
         conservative (bool): Only use exons if the strands of both exons are known.
@@ -31,9 +31,9 @@ def extends_transcript(ta_exon: Series,
                 # Checks if the transcript end at the same position
                 if (int(ta_exon[4])==int(gp_exon[4])):
                     return True
-            # Extends transcript to the right
+            # Checks if the ta_exon extends the transcript to the left
             if (int(ta_exon[4])>int(tran[4])):
-                # Starts at same position as old exon     
+                # Checks if the transcript starts at the same position     
                 if (int(ta_exon[3])==int(gp_exon[3])):    
                     return True
             
