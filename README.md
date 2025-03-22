@@ -66,15 +66,32 @@ one or both of them might not be known).
 
 ### Output
 
+The gene prediction gff with extended Exons:
+
+Exons:<br>
+1	seqid	<seqid_transcriptome_assembly> (same as <seqid_gene_prediction>)<br>
+2	source  <source_gene_prediction> + <source_transcriptome_assembly> (UTRpy)<br>
+3	type	exon<br>
+4	start	<start_transcriptome_assembly><br>
+5	end	<end_transcriptome_assembly><br>
+6	score	<score_transcriptome_assembly><br>
+7	strand <strand_transcriptome_assembly> (same as <strand_transcriptome_assembly> if conservative=True)<br>
+8	phase	.<br>
+9	attributes  <attributes_gene_prediction><br>
+
+Transcripts<br>
+Start and end positions updated according to the exon extension
+
+Genes<br>
+Start and end positions updated according to the exon extension
+
+**Example:**
+
 Gene prediction input exon:     
-`HiC_scaffold_1 AUGUSTUS    exon    2207399   2208325   .   -   .   ID=agat-exon-51;Parent=ga_chond_ext_ncbi_g49.t1;gene_id=g_p_13;transcript_id=ga_chond_ext_ncbi_g49.t1`
+`Chr_1 AUGUSTUS    exon    2207399   2208325   .   -   .   ID=agat-exon-51;Parent=ga_chond_ext_ncbi_g49.t1;gene_id=g_p_13;transcript_id=ga_chond_ext_ncbi_g49.t1`
 
 Transcriptome assembly input exon:     
-`HiC_scaffold_1  StringTie   exon    2206428 2208325 1000.0  -   .   transcript_id "STRG.130.1"; gene_id "STRG.130";`
+`Chr_1  StringTie   exon    2206428 2208325 1000.0  -   .   transcript_id "STRG.130.1"; gene_id "STRG.130";`
 
 UTRpy output exon:    
-`HiC_scaffold_1 AUGUSTUS + StringTie (UTRpy)    exon    2206428   2208325 1000.0  -   .   ID=agat-exon-51;Parent=ga_chond_ext_ncbi_g49.t1;gene_id=g_p_13;transcript_id=ga_chond_ext_ncbi_g49.t1`
-
-For exons the attributes of the genome prediction exons are kept and the source updated to <source_gene_prediction> + <source_transcriptome_assembly> (UTRpy). All other fields are used from the transcriptome assembly exons.
-
-For transcripts and genes the start / end positions are updated according to the extension.
+`Chr_1 AUGUSTUS + StringTie (UTRpy)    exon    2206428   2208325 1000.0  -   .   ID=agat-exon-51;Parent=ga_chond_ext_ncbi_g49.t1;gene_id=g_p_13;transcript_id=ga_chond_ext_ncbi_g49.t1`
