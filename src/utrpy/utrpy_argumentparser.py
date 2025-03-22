@@ -24,7 +24,7 @@ class UTRpyArgparser(ArgumentParser):
         # Options
         self.add_argument("-mel","--maximum_exon_length",
                           type=int,
-                          default=25_000,
+                          default=20_000,
                           help="Maximum exon length prevents the use of unreasonably long exons. [Default:25000]")
         self.add_argument("-meo","--minimum_exon_overlap",
                           type=int,
