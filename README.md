@@ -111,3 +111,6 @@ Transcriptome assembly input exon:
 
 UTRpy output exon:    
 `Chr_1 AUGUSTUS + StringTie (UTRpy)    exon    2206428   2208325 1000.0  -   .   ID=agat-exon-51;Parent=ga_chond_ext_ncbi_g49.t1;gene_id=g_p_13;transcript_id=ga_chond_ext_ncbi_g49.t1`
+
+## Limitations
+In step 1 each exon is paired with at most one other exon. If there are multiple overlapping exons in of the annotations there is a small chance that UTRpy misses the exon that would lead to an UTR extension.
