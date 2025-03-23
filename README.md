@@ -78,7 +78,7 @@ If True, exons from the gene prediction are only replaced with exons from the<br
 transcriptome assembly if they are known to be of the same strand.<br>
 If False it is sufficient if they are not known to be of different strands (The strand of<br>
 one or both of them might not be known).<br>
-Default: True
+Default: False
 
 ### Output
 
