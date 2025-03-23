@@ -1,7 +1,7 @@
 from logging         import info
 from pandas          import DataFrame, read_csv
 from multiprocessing import Pool
-from numpy           import sum
+from numpy           import min, sum
 
 from .utrpy_argumentparser import UTRpyArgparser
 from .utrpy_exon_extend    import exon_extend_threaded, exon_extend
@@ -17,6 +17,11 @@ def main():
     info("Reading ...")
     gff_prediction = read_csv(args.gff_prediction, sep="\t", header=None, comment="#")
     gff_assembly   = read_csv(args.gff_assembly,   sep="\t", header=None, comment="#")
+
+    if args.minimum_exon_overlap == None:
+        minimum_exon_overlap = min(gff_prediction[4]-gff_prediction[3])
+    else:
+        minimum_exon_overlap = args.minimum_exon_overlap
 
     info("Scaffold splitting ...")
     scaffolds      = list(gff_prediction[0].unique())
