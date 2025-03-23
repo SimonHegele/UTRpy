@@ -103,7 +103,6 @@ def exon_extend(gff_gp: DataFrame,
     
     for i, j in feature_matches(gff_gp, gff_ta, "exon", "exon", min_overlap):
 
-        #try:
         gp_exon = gff_gp.iloc[i]
         ta_exon = gff_ta.iloc[j]
         tran_id  = search(r'transcript_id=([^;]+)', gp_exon[8]).group(0).split("=")[1]
