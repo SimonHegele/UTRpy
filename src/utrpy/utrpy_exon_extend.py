@@ -118,10 +118,6 @@ def exon_extend(gff_gp: DataFrame,
             n += 1
             update_gff(gff_gp, ta_exon, i, tran, gene)
             
-
-        #except:
-        #warning(f"failed at {gff_gp.iloc[0,0]}\ngff_gp row {list(gp_exon)}\n gff_ta row {list(ta_exon)}")
-
     info("\tDone {0:<20} (Extended exons: {1:>5})".format(gff_gp.iloc[0,0],n))
     return gff_gp, n
 
