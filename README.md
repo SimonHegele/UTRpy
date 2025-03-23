@@ -57,7 +57,7 @@ options:
   -mel MAXIMUM_EXON_LENGTH, --maximum_exon_length MAXIMUM_EXON_LENGTH
                         Maximum exon length prevents the use of unreasonably long exons. [Default:20000]
   -meo MINIMUM_EXON_OVERLAP, --minimum_exon_overlap MINIMUM_EXON_OVERLAP
-                        Minimum overlap of exons to be considered [Default:3]
+                        Minimum overlap of exons to be considered [Default:Auto]
   -t THREADS, --threads THREADS
                         Number of threads to use [Default:4]
   -c, --conservative    Will not use exons if their strand is not known [Default:True]
@@ -68,14 +68,17 @@ options:
 1. **maximum_exon_length**<br>
 To my best knowlege the longest confirmed exon is of the MUC16 gene and has a length of<br>
 ~21kb (https://doi.org/10.1093/nar/gks652). One might therefore pose a limit on the exon<br>
-lengths to prevent the use of false exons.
-2. **minimum_exon_overlap**<br>
+lengths to prevent the use of false exons.<br>
+Default: 20000
+3. **minimum_exon_overlap**<br>
 Minimum overlap length of pairs of exons to be further investigated controls sensitivity.<br>
+Default: Auto (The length of the smallest exon)
 4. **conservative**<br>
-If True (default), exons from the gene prediction are only replaced with exons from the<br>
+If True, exons from the gene prediction are only replaced with exons from the<br>
 transcriptome assembly if they are known to be of the same strand.<br>
 If False it is sufficient if they are not known to be of different strands (The strand of<br>
-one or both of them might not be known).
+one or both of them might not be known).<br>
+Default: True
 
 ### Output
 
