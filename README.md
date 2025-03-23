@@ -2,24 +2,36 @@
   <img src="UTRpyLogo.png" alt="Meine Bildunterschrift" width="300"/>
 </p>
 
-Extending transcripts in genome annotations from protein orthology based gene prediction<br>
-tools using exons in genome annotations from reference based transcriptome assembly tools.
-
 <p align="center">
   <img src="UTRpy.drawio.png" alt="Meine Bildunterschrift" width="500"/>
   <br>
   <em>UTRpy workflow</em>
 </p>
 
-Given a pair of overlapping exons including an exon from the transcriptome assembly (exon_ta)<br>
-and an exon from the genome prediction (exon_gp) and its corresponding transcript (tran_gp)<br>
-we decide if exon_ta is a suitable replacement for exon_gp based on following criteria:
+Extending flanking transcript exons in genome annotations from protein orthology based gene<br>
+prediction using exons in genome annotations from reference based transcriptome assembly.<br>
+These extensions are the Un-Translated Regions (UTRs) of the transcripts.
+
+## Workflow
+
+**Step 1:**
+Identifying pairs of exons where exons from the transcriptome assembly overlap exons from the<br>
+gene prediction.
+
+**Step 2:**
+Deciding if in a pair of overlapping exons the exon from the transcriptome assembly (exon_ta) is<br>
+an UTR-extension for the exon from the gene prediction (exon_gp) based on the following criteria:
 1. The length of exon_ta does not exceed a certain limit
 2. Their strand information must match (More details in the Parameters-section)
 3. Exon_ta and exon_gp have either shared start or end positions
 4. Exon_ta actually extends tran_gp
 
+**Step 3:**
+Merging the annotations
+
 ## Installation
+
+Tested with Python 3.12.8, but any Python >= 3.10 should be fine too.
 
 ```
 git clone https://github.com/SimonHegele/UTRpy
@@ -58,9 +70,8 @@ To my best knowlege the longest confirmed exon is of the MUC16 gene and has a le
 ~21kb (https://doi.org/10.1093/nar/gks652). One might therefore pose a limit on the exon<br>
 lengths to prevent the use of false exons.
 2. **minimum_exon_overlap**<br>
-Minimum overlap length of pairs of exons to be further investigated. Increasing the value<br>
-increases speed at the cost of sensitivity.
-3. **conservative**<br>
+Minimum overlap length of pairs of exons to be further investigated controls sensitivity.<br>
+4. **conservative**<br>
 If True (default), exons from the gene prediction are only replaced with exons from the<br>
 transcriptome assembly if they are known to be of the same strand.<br>
 If False it is sufficient if they are not known to be of different strands (The strand of<br>
