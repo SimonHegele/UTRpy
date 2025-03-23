@@ -1,7 +1,5 @@
 <p align="center">
   <img src="UTRpyLogo.png" alt="Meine Bildunterschrift" width="300"/>
-  <br>
-  <em>UTRpy workflow</em>
 </p>
 
 Extending transcripts in genome annotations from protein orthology based gene prediction<br>
