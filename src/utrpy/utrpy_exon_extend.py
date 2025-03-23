@@ -96,6 +96,10 @@ def exon_extend(gff_gp: DataFrame,
         tuple[DataFrame, int]: Updated GFF with extended features and number of extensions
     """
     n = 0
+                  
+    # Sorting features by start positions
+    gff_gp = gff_gp.sort_values(3)
+    gff_ta = gff_ta.sort_values(3)
     
     for i, j in feature_matches(gff_gp, gff_ta, "exon", "exon", min_overlap):
 
