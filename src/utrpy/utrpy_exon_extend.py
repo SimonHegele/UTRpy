@@ -25,7 +25,7 @@ def extends_transcript(ta_exon: Series,
     # Checks if the exon length exceeds what we consider to be reasonable
     if ta_exon[4]- ta_exon[3] <= max_exon_length:
         # Checks strandedness
-        if (ta_exon[6]==tran[6]) or (not conservative and (ta_exon[6]=="." or gp_exon[6]==".")):
+        if (ta_exon[6]==tran[6] and ta_exon[6]!='.') or (not conservative and (ta_exon[6]=="." or gp_exon[6]==".")):
             # Checks if the ta_exon extends the transcript to the left
             if (int(ta_exon[3])<int(tran[3])):
                 # Checks if the transcript end at the same position
