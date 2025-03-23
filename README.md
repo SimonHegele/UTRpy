@@ -14,11 +14,11 @@ These extensions are the Un-Translated Regions (UTRs) of the transcripts.
 
 ## Workflow
 
-**Step 1:**
+**Step 1:**<br>
 Identifying pairs of exons where exons from the transcriptome assembly overlap exons from the<br>
 gene prediction.
 
-**Step 2:**
+**Step 2:**<br>
 Deciding if in a pair of overlapping exons the exon from the transcriptome assembly (exon_ta) is<br>
 an UTR-extension for the exon from the gene prediction (exon_gp) based on the following criteria:
 1. The length of exon_ta does not exceed a certain limit
@@ -26,7 +26,7 @@ an UTR-extension for the exon from the gene prediction (exon_gp) based on the fo
 3. Exon_ta and exon_gp have either shared start or end positions
 4. Exon_ta actually extends tran_gp
 
-**Step 3:**
+**Step 3:**<br>
 Merging the annotations
 
 ## Installation
