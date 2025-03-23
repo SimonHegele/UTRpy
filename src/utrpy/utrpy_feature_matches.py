@@ -41,8 +41,7 @@ def feature_matches(gff1: DataFrame,
                     feature_type1: str,
                     feature_type2: str,
                     min_overlap) -> Generator:
-    """_summary_
-
+    """
     Args:
         gff1 (DataFrame):            A pandas DataFrame representing a GFF file (or part of it)
         gff2 (DataFrame):            A pandas DataFrame representing a GFF file (or part of it)
@@ -51,7 +50,7 @@ def feature_matches(gff1: DataFrame,
         min_overlap (int, optional): The minimum required overlap length
 
     Yields:
-        Generator[int,int]: _description_
+        Generator: 2-tuples (i,j) refering to indices of overlapping features in gff1 and gff2.
     """
     i = next_feature_index(gff1, -1, feature_type1)
     j = next_feature_index(gff2, -1, feature_type2)
