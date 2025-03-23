@@ -28,8 +28,7 @@ class UTRpyArgparser(ArgumentParser):
                           help="Maximum exon length prevents the use of unreasonably long exons. [Default:20000]")
         self.add_argument("-meo","--minimum_exon_overlap",
                           type=int,
-                          default=3,
-                          help="Minimum overlap of exons to be considered [Default:3]")
+                          help="Minimum overlap of exons to be considered [Default:Auto]")
         self.add_argument("-t", "--threads",
                           type=int,
                           default=4,
