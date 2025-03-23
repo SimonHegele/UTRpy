@@ -57,11 +57,6 @@ def replace_feature(gff: DataFrame,
     gff.iloc[i,8] = old_feature[8]
     gff.iloc[i,1] = f"{old_feature[1]} + {new_feature[1]} (UTRpy)"
 
-    print(f"GP:  {list(old_feature)}")
-    print(f"TA:  {list(new_feature)}")
-    print(f"New: {list(gff.iloc[i])}")
-    print()
-
 def update_length(feature: Series, new_exon: Series, gff: DataFrame):
     try:
         row_idx = feature.index[0]
