@@ -35,5 +35,5 @@ class UTRpyArgparser(ArgumentParser):
                           help="Number of threads to use [Default:4]")
         self.add_argument("-c","--conservative",
                           action="store_true",
-                          default=True,
+                          default=False,
                           help="Will not use exons if their strand is not known [Default:True]")
