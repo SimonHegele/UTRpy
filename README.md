@@ -3,31 +3,21 @@
 </p>
 
 <p align="center">
-  <img src="UTRpy.drawio.png" alt="Meine Bildunterschrift" width="500"/>
+  <img src="UTRpy.png" alt="Meine Bildunterschrift" width="500"/>
   <br>
   <em>UTRpy workflow</em>
 </p>
 
-Extending flanking transcript exons in genome annotations from protein orthology based gene<br>
-prediction using exons in genome annotations from reference based transcriptome assembly.<br>
-These extensions are the Un-Translated Regions (UTRs) of the transcripts.
+UTR extension of transcript exons from protein orthology based gene prediction using exons from reference based assembly.
 
-## Workflow
+Protein ortholog-based gene prediction enables the transfer of detailed gene structure and functional annotations across species by leveraging evolutionary conservation. Genome annotations from such methods, however, usually lack Un-Translated Regions (UTRs). UTRpy supplements these by using exons from reference based transcriptome assemblies.
 
-**Step 1:**<br>
-Identifying pairs of exons where exons from the transcriptome assembly overlap exons from the<br>
-gene prediction.
-
-**Step 2:**<br>
-Deciding if in a pair of overlapping exons the exon from the transcriptome assembly (exon_ta) is<br>
-an UTR-extension for the exon from the gene prediction (exon_gp) based on the following criteria:
+The decision if in a pair of overlapping exons the exon from the transcriptome assembly (exon_ta) is<br>
+an UTR-extension for the exon from the gene prediction (exon_gp) is based on the following criteria:
 1. The length of exon_ta does not exceed a certain limit
-2. Their strand information must match (More details in the Parameters-section)
+2. Their strand information must match (More details in the Parameters section)
 3. Exon_ta and exon_gp have either shared start or end positions
 4. Exon_ta actually extends tran_gp
-
-**Step 3:**<br>
-Merging the annotations
 
 ## Installation
 
@@ -42,10 +32,9 @@ pip install .
 ## Usage
 
 ```
-usage: utrpy [-h] [-mel MAXIMUM_EXON_LENGTH] [-meo MINIMUM_EXON_OVERLAP] [-t THREADS] [-c] gff_prediction gff_assembly gff_utrpy
+usage: utrpy [-h] [-max MAXIMUM_EXON_LENGTH] [-t THREADS] [-s] gff_prediction gff_assembly gff_utrpy
 
-Genome annotions from protein orthology based gene prediction tools lack UTRs. Exons in these kind of gene annotations can be extended toalso cover UTRs using exons generated with reference based assembly tools
-such as StringTie.
+UTR extension of transcript exons from protein orthology based gene prediction using exons from reference based assembly
 
 positional arguments:
   gff_prediction        GFF-format genome annotation from gene prediction.
@@ -54,30 +43,25 @@ positional arguments:
 
 options:
   -h, --help            show this help message and exit
-  -mel MAXIMUM_EXON_LENGTH, --maximum_exon_length MAXIMUM_EXON_LENGTH
+  -max MAXIMUM_EXON_LENGTH, --maximum_exon_length MAXIMUM_EXON_LENGTH
                         Maximum exon length prevents the use of unreasonably long exons. [Default:20000]
-  -meo MINIMUM_EXON_OVERLAP, --minimum_exon_overlap MINIMUM_EXON_OVERLAP
-                        Minimum overlap of exons to be considered [Default:Auto]
   -t THREADS, --threads THREADS
                         Number of threads to use [Default:4]
-  -c, --conservative    Will not use exons if their strand is not known [Default:True]
+  -s, --strict_strandedness
+                        If True: Exons with unknown strandedness are not used [Default:False]
 ```
 
 ### Parameters
 
-1. **maximum_exon_length**<br>
-To my best knowlege the longest confirmed exon is of the MUC16 gene and has a length of<br>
-~21kb (https://doi.org/10.1093/nar/gks652). One might therefore pose a limit on the exon<br>
-lengths to prevent the use of false exons.<br>
+- **Input**<br>
+Annotations from gene prediction and transcriptome assembly.<br>
+The gene prediction annotation must be in GFF-format while the transcriptome assembly can be either in GFF-format or GTF-format.
+- **maximum_exon_length**<br>
+Exons from the transcriptome assembly exceeding this length are considered to be incorrect and are not used.<br>
 Default: 20000
-3. **minimum_exon_overlap**<br>
-Minimum overlap length of pairs of exons to be further investigated controls sensitivity.<br>
-Default: Auto (The length of the smallest exon)
-4. **conservative**<br>
-If True, exons from the gene prediction are only replaced with exons from the<br>
-transcriptome assembly if they are known to be of the same strand.<br>
-If False it is sufficient if they are not known to be of different strands (The strand of<br>
-one or both of them might not be known).<br>
+- **strict_strandedness**
+If True, only exons from the transcriptome assembly known to be on the same strand are used.
+Else, all exons from the transcriptome assembly that are not known to be of a different strand are used.
 Default: False
 
 ### Output
@@ -112,5 +96,7 @@ Transcriptome assembly input exon:
 UTRpy output exon:    
 `Chr_1 AUGUSTUS + StringTie (UTRpy)    exon    2206428   2208325 1000.0  -   .   ID=agat-exon-51;Parent=ga_chond_ext_ncbi_g49.t1;gene_id=g_p_13;transcript_id=ga_chond_ext_ncbi_g49.t1`
 
-## Limitations
-In step 1 each exon is paired with at most one other exon. If there are multiple overlapping exons in of the annotations there is a small chance that UTRpy misses the exon that would lead to an UTR extension.
+## Future plans
+
+1. Explicitly adding UTRs as features to the resulting annotation
+2. Switching from Pandas to the faster Polars
