@@ -57,10 +57,10 @@ def update_length(feature: Series, new_exon: Series, gff: DataFrame):
 
     try:
         row_idx = feature.index[0]
-        gff.at[row_idx, 3] = min(gff.at[row_idx, 3], new_exon[3])
-        gff.at[row_idx, 4] = max(gff.at[row_idx, 4], new_exon[4])
+        gff.iloc[row_idx, 3] = min(gff.iloc[row_idx, 3], new_exon[3])
+        gff.iloc[row_idx, 4] = max(gff.iloc[row_idx, 4], new_exon[4])
     except:
-        feature
+        error(f"Failed updating length of {list(feature)}")
 
 def utr_extend(gff_gp: DataFrame, gff_ta:DataFrame, i: int, j: int):
 
