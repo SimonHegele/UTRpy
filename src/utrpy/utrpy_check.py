@@ -71,10 +71,10 @@ def check(ta_exon: Series,
     Returns:
         bool: True if ta_exon extends the transcript
     """
-    if not check_feature_length(ta_exon, max_exon_length):
-        return False
+    if not check_extends(ta_exon, gp_exon, tran):
+        return False          
     if not check_strandedness(ta_exon, gp_exon, strict):
         return False
-    if not check_extends(ta_exon, gp_exon, tran):
+    if not check_feature_length(ta_exon, max_exon_length):
         return False
     return True
