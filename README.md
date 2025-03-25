@@ -60,8 +60,8 @@ The gene prediction annotation must be in GFF-format while the transcriptome ass
 Exons from the transcriptome assembly exceeding this length are considered to be incorrect and are not used.<br>
 Default: 20000
 - **strict_strandedness**<br>
-If True, only exons from the transcriptome assembly known to be on the same strand are used.
-Else, all exons from the transcriptome assembly that are not known to be of a different strand are used.
+If True, only exons from the transcriptome assembly known to be on the same strand are used.<br>
+Else, all exons from the transcriptome assembly that are not known to be of a different strand are used.<br>
 Default: False
 
 ### Output
