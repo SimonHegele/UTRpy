@@ -1,16 +1,14 @@
 <p align="center">
-  <img src="UTRpyLogo.png" alt="Meine Bildunterschrift" width="300"/>
+  <img src="UTRpyLogo.png" width="300"/>
 </p>
 
 <p align="center">
-  <img src="UTRpy.png" alt="Meine Bildunterschrift" width="500"/>
-  <br>
-  <em>UTRpy workflow</em>
+  <img src="UTRpy.png" width="500"/>
 </p>
 
-UTR extension of transcript exons from protein orthology based gene prediction using exons from reference based assembly.
+Lost in translation but meaningfull: UnTranslated Regions (UTRs), have a variety of important regulatory functions and a genome annotation without them wouldn't really be complete, right?
 
-Protein ortholog-based gene prediction enables the transfer of detailed gene structure and functional annotations across species by leveraging evolutionary conservation. Genome annotations from such methods, however, usually lack Un-Translated Regions (UTRs). UTRpy supplements these by using exons from reference based transcriptome assemblies.
+Protein ortholog-based gene prediction enables the transfer of detailed gene structure and functional annotations across species by leveraging evolutionary conservation. However, genome annotations from such methods lack UTRs. UTRpy supplements these by using exons from reference based transcriptome assemblies.
 
 The decision if in a pair of exons the exon from the transcriptome assembly (exon_ta) is<br>
 an UTR-extension for the exon from the gene prediction (exon_gp) is based on the following criteria:
