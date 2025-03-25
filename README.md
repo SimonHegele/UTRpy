@@ -12,12 +12,12 @@ UTR extension of transcript exons from protein orthology based gene prediction u
 
 Protein ortholog-based gene prediction enables the transfer of detailed gene structure and functional annotations across species by leveraging evolutionary conservation. Genome annotations from such methods, however, usually lack Un-Translated Regions (UTRs). UTRpy supplements these by using exons from reference based transcriptome assemblies.
 
-The decision if in a pair of overlapping exons the exon from the transcriptome assembly (exon_ta) is<br>
+The decision if in a pair of exons the exon from the transcriptome assembly (exon_ta) is<br>
 an UTR-extension for the exon from the gene prediction (exon_gp) is based on the following criteria:
 1. The length of exon_ta does not exceed a certain limit
 2. Their strand information must match (More details in the Parameters section)
 3. Exon_ta and exon_gp have either shared start or end positions
-4. Exon_ta actually extends tran_gp
+4. Exon_ta actually extends tran_gp to one side
 
 ## Installation
 
