@@ -61,7 +61,7 @@ Default: 20000
 - **strict_strandedness**<br>
 Only use exons from the transcriptome assembly known to be on the same strand<br>
 Otherwise, exons of unknown strands are allowed.
-- **explicit**
+- **explicit**<br>
 Explicitly add 5'-UTRs and 3'UTRs as features to the output GFF.
 Hint: By using the dummy.gff-file you can use this feature without providing additional exons. 
 
