@@ -30,7 +30,7 @@ pip install .
 ## Usage
 
 ```
-usage: utrpy [-h] [-max MAXIMUM_EXON_LENGTH] [-t THREADS] [-s] gff_prediction gff_assembly gff_utrpy
+usage: utrpy [-h] [-max MAXIMUM_EXON_LENGTH] [-t THREADS] [-s] [-e] gff_prediction gff_assembly gff_utrpy
 
 UTR extension of transcript exons from protein orthology based gene prediction using exons from reference based assembly
 
@@ -46,42 +46,32 @@ options:
   -t THREADS, --threads THREADS
                         Number of threads to use [Default:4]
   -s, --strict_strandedness
-                        If True: Exons with unknown strandedness are not used [Default:False]
+                        Exons with unknown strandedness are not used
+  -e, --explicit        Explicitly add UTRs as features
 ```
 
 ### Parameters
 
 - **Input**<br>
 Annotations from gene prediction and transcriptome assembly.<br>
-The gene prediction annotation must be in GFF-format while the transcriptome assembly can be either in GFF-format or GTF-format.
+The gene prediction annotation must be in GFF-format while the transcriptome assembly can be either in GFF-format or GTF-format.<br> 
 - **maximum_exon_length**<br>
 Exons from the transcriptome assembly exceeding this length are considered to be incorrect and are not used.<br>
 Default: 20000
 - **strict_strandedness**<br>
-If True, only exons from the transcriptome assembly known to be on the same strand are used.<br>
-Else, all exons from the transcriptome assembly that are not known to be of a different strand are used.<br>
-Default: False
+Only use exons from the transcriptome assembly known to be on the same strand<br>
+Otherwise, exons of unknown strands are allowed.
+- **explicit**
+Explicitly add 5'-UTRs and 3'UTRs as features to the output GFF.
+Hint: By using the dummy.gff-file you can use this feature without providing additional exons. 
 
 ### Output
 
-The gene prediction gff with extended Exons:
+For Exons with UTR-extension start and end positions of the exons themselves as well as for their transcripts and genes are updated and their source set to <source_gene_prediction> + <source_transcriptome_assembly> (UTRpy)
 
-Exons:<br>
-1	seqid	<seqid_transcriptome_assembly> (same as <seqid_gene_prediction>)<br>
-2	source  <source_gene_prediction> + <source_transcriptome_assembly> (UTRpy)<br>
-3	type	exon<br>
-4	start	<start_transcriptome_assembly><br>
-5	end	<end_transcriptome_assembly><br>
-6	score	<score_transcriptome_assembly><br>
-7	strand <strand_transcriptome_assembly> (same as <strand_transcriptome_assembly> if conservative=True)<br>
-8	phase	.<br>
-9	attributes  <attributes_gene_prediction><br>
+If run with the "-e"/"--explicit" you can use the provided Jupyter-notebook to take a look on the length distributions of the UTRs.
 
-Transcripts<br>
-Start and end positions updated according to the exon extension
-
-Genes<br>
-Start and end positions updated according to the exon extension
+In the output GFF any comments from the original GFF are removed.
 
 **Example:**
 
@@ -94,7 +84,6 @@ Transcriptome assembly input exon:
 UTRpy output exon:    
 `Chr_1 AUGUSTUS + StringTie (UTRpy)    exon    2206428   2208325 1000.0  -   .   ID=agat-exon-51;Parent=ga_chond_ext_ncbi_g49.t1`
 
-## Future plans
+## Future plans / ideas
 
-1. Explicitly adding UTRs as features to the resulting annotation
-2. Switching from Pandas to the faster Polars
+Switching from Pandas to the faster Polars
