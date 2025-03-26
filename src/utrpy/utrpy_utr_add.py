@@ -7,8 +7,9 @@ from pandas  import DataFrame
 from re      import search
 
 def add_utr(gff, type, start, stop, strand, chr, i, transcript_id):
-    gff.loc[len(gff)] = [chr, "UTRpy", type, start, stop, '.', strand, '.',
-                        f"ID=3pUTR_{chr}_{i};Parent={transcript_id}"]
+    if not start == stop:
+        gff.loc[len(gff)] = [chr, "UTRpy", type, start, stop, '.', strand, '.',
+                            f"ID=3pUTR_{chr}_{i};Parent={transcript_id}"]
 
 def add_3_prime_utrs(gff: DataFrame):
 
