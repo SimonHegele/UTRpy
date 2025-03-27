@@ -1,4 +1,5 @@
-from pandas import DataFrame
+from logging import info
+from pandas  import DataFrame
 
 def scaffold_split(gff: DataFrame) -> dict[str, DataFrame]:
     """
@@ -12,6 +13,7 @@ def scaffold_split(gff: DataFrame) -> dict[str, DataFrame]:
     Returns:
         dict[str, DataFrame]: A dictionary mapping scaffold names to their respective GFF subsets.
     """
+    info("Scaffold splitting ...")
     return {scaffold: gff[gff[0] == scaffold].sort_values(by=gff.columns[3])
             .reset_index(drop=True) 
             for scaffold in gff[0].unique()}
