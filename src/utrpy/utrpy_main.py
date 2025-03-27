@@ -16,10 +16,9 @@ def main():
 
     logging_setup("info", f"{args.gff_utrpy}.log")
 
-    info("Reading ...")
     gff_prediction, gff_assembly = load_data(args)
 
-    info("Scaffold splitting ...")
+
     scaffolds      = list(gff_prediction[0].unique())
     gff_prediction = scaffold_split(gff_prediction)
     gff_assembly   = scaffold_split(gff_assembly)
@@ -43,7 +42,6 @@ def main():
             gffs    = [r[0] for r in results]
             info(f"Done all  (Annotated UTRs: {sum([r[1] for r in results])})")
 
-    info("Writing ...")
     write_data(args, gffs, scaffolds)
 
     info("++++++++++++++++++++++++++++++++++")
