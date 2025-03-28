@@ -17,7 +17,7 @@ an UTR-extension for the exon from the gene prediction (exon_gp) and its corresp
 3. Exon_ta and exon_gp have either shared start or end positions
 4. Exon_ta actually extends tran_gp to one side
 
-## Installation
+## 1 Installation
 
 Tested with Python 3.12.8, but any Python >= 3.10 should be fine too.
 
@@ -27,7 +27,7 @@ cd UTRpy
 pip install .
 ```
 
-## Usage
+## 2 Usage
 
 ```
 usage: utrpy [-h] [-max MAXIMUM_EXON_LENGTH] [-t THREADS] [-s] [-e] gff_prediction gff_assembly gff_utrpy
@@ -50,7 +50,7 @@ options:
   -e, --explicit        Explicitly add UTRs as features
 ```
 
-### Parameters
+### 2.1 Parameters
 
 - **Input**<br>
 Annotations from gene prediction and transcriptome assembly.<br>
@@ -65,7 +65,7 @@ Otherwise, exons of unknown strands are allowed.
 Explicitly add 5'-UTRs and 3'UTRs as features to the output GFF.
 Hint: By using the dummy.gff-file you can use this feature without providing additional exons. 
 
-### Output
+### 2.2 Output
 
 For Exons with UTR-extension start and end positions of the exons themselves as well as for their transcripts and genes are updated and their source set to <source_gene_prediction> + <source_transcriptome_assembly> (UTRpy)
 
@@ -84,9 +84,9 @@ Transcriptome assembly input exon:
 UTRpy output exon:    
 `Chr_1 AUGUSTUS + StringTie (UTRpy)    exon    2206428   2208325 .  -   .   ID=agat-exon-51;Parent=ga_chond_ext_ncbi_g49.t1`
 
-## Limitations / Known issues
+## 3 Limitations / Known issues
 
-### Dealing with overlapping exons
+### 3.1 Dealing with overlapping exons
 
 UTRpy sorts the annotated features by their starting positions. It uses two indices i and j to refer to the position of exons from the gene prediction and transcriptome assembly respectively. UTRpy then tests, if the exon from the transcriptome assembly offers an UTR extension for the exon from the gene prediction. If so, both i and j are increased, else only the one refering to the one with the smaller starting position is increased. This can cause UTRpy to miss matching pairs of exons when there are overlapping exons as illustrated in the figure below. Here, there is a pair of matching exons (green) and an unrelated overlapping exon on the other strand. Here, j will be increased as the exon from the assembly starts first. UTRpy will overlook the pair of matching exons.
 
@@ -94,9 +94,7 @@ UTRpy sorts the annotated features by their starting positions. It uses two indi
   <img src="figures/MissingOverlappingExons.png" width="500"/>
 </p>
 
-
-
-## Future plans / ideas
+## 4 Future plans / ideas
 
 - Fixing the issue with overlapping exons
 - Pandas -> Polars
