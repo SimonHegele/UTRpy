@@ -88,7 +88,7 @@ UTRpy output exon:
 
 ### 3.1 Dealing with overlapping exons
 
-UTRpy sorts the annotated features by their starting positions. It uses two indices i and j to refer to the position of exons from the gene prediction and transcriptome assembly respectively. UTRpy then tests, if the exon from the transcriptome assembly offers an UTR extension for the exon from the gene prediction. If so, both i and j are increased, else only the one refering to the one with the smaller starting position is increased. This can cause UTRpy to miss matching pairs of exons when there are overlapping exons as illustrated in the figure below. Here, there is a pair of matching exons (green) and an unrelated overlapping exon on the other strand. Here, j will be increased as the exon from the assembly starts first. UTRpy will overlook the pair of matching exons.
+UTRpy sorts the annotated features by their starting positions. It uses two indices i and j to refer to the position of exons in the annotation files from the gene prediction and transcriptome assembly respectively. UTRpy tests, if the exon from the transcriptome assembly offers an UTR extension for the exon from the gene prediction. If so, both i and j are increased, else only the one refering to the exon with the smaller starting position is increased. This can cause UTRpy to miss matching pairs of exons when there are overlapping exons as illustrated in the figure below. Here, there is a pair of matching exons (green) and an unrelated overlapping exon on the other strand. UTRpy will overlook the pair of matching exons as it increases j first because the corresponding exon starts at an earlier position.
 
 <p align="center">
   <img src="figures/MissingOverlappingExons.png" width="500"/>
