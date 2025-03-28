@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="UTRpyLogo.png" width="300"/>
+  <img src="figures/UTRpyLogo.png" width="300"/>
 </p>
 
 <p align="center">
-  <img src="UTRpy.png" width="500"/>
+  <img src="figures/UTRpy.png" width="500"/>
 </p>
 
 Lost in translation but meaningfull: UnTranslated Regions (UTRs), have a variety of important regulatory functions and a genome annotation without them wouldn't really be complete, right?
@@ -84,6 +84,19 @@ Transcriptome assembly input exon:
 UTRpy output exon:    
 `Chr_1 AUGUSTUS + StringTie (UTRpy)    exon    2206428   2208325 .  -   .   ID=agat-exon-51;Parent=ga_chond_ext_ncbi_g49.t1`
 
+## Limitations / Known issues
+
+### Dealing with overlapping exons
+
+UTRpy sorts the annotated features by their starting positions. It uses two indices i and j to refer to the position of exons from the gene prediction and transcriptome assembly respectively. UTRpy then tests, if the exon from the transcriptome assembly offers an UTR extension for the exon from the gene prediction. If so, both i and j are increased, else only the one refering to the one with the smaller starting position is increased. This can cause UTRpy to miss matching pairs of exons when there are overlapping exons as illustrated in the figure below. Here, there is a pair of matching exons (green) and an unrelated overlapping exon on the other strand. Here, j will be increased as the exon from the assembly starts first. UTRpy will overlook the pair of matching exons.
+
+<p align="center">
+  <img src="figures/MissingOverlappingExons.png" width="300"/>
+</p>
+
+
+
 ## Future plans / ideas
 
-Switching from Pandas to the faster Polars
+- Fixing the issue with overlapping exons
+- Pandas -> Polars
