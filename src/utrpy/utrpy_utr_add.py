@@ -15,7 +15,7 @@ def add_3_prime_utrs(gff: DataFrame):
 
     transcripts  = gff.loc[gff[2]=="transcript"]
     stop_codons  = gff.loc[gff[2]=="stop_codon"]
-    type         = "3'-UTR"
+    type         = "three_prime_UTR"
 
     for i, transcript in transcripts.iterrows():
 
@@ -39,7 +39,7 @@ def add_5_prime_utrs(gff: DataFrame) -> DataFrame:
 
     transcripts  = gff.loc[gff[2]=="transcript"]
     start_codons = gff.loc[gff[2]=="start_codon"]
-    type         = "5'-UTR"
+    type         = "five_prime_UTR"
 
     for i, transcript in transcripts.iterrows():
 
