@@ -19,9 +19,11 @@ UTRpy can explicitly add UTRs as features to any annotation.
 
 ## 1 Installation
 
-Tested with Python 3.12.8, but any Python >= 3.10 should be fine too.
+Requires Python >= 3.10
 
 ```
+conda create -n utrpy python=3.10   # (optional)
+conda activate utryp                # (optional)
 git clone https://github.com/SimonHegele/UTRpy
 cd UTRpy
 pip install .
