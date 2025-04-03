@@ -1,3 +1,12 @@
+"""
+Script Name:    utrpy_logging.py
+Description:    Provides function logging_setup()
+Author:         Simon Hegele
+Date:           2025-04-01
+Version:        0.2
+License:        GPL-3
+"""
+
 import logging
 
 from sys import stdout

@@ -1,1 +1,5 @@
-Chr66	God	gene	666	666	.	.	.	ID=TheGodGene
+# Dummy GFF
+# Can be supplied to UTRpy if you only want to annotate UTRs without performing
+# As this file is void of usefull exons, you can effectively skip the exon
+# extension step.
+Chr666	God	gene	666	666	.	.	.	ID=TheGodGene

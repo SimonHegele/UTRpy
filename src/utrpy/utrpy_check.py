@@ -1,11 +1,18 @@
 """
-Functions to check if an exon from the assembly provides an UTR-extension
+Script Name:    utrpy_check.py
+Description:    Provides function check() (and helper functions) to evaluates if an exon
+                from the transcriptome assembly has an exon extension for an exon from the
+                gene prediction
+Author:         Simon Hegele
+Date:           2025-04-01
+Version:        0.2
+License:        GPL-3
 """
 
-from pandas import DataFrame, Series
+from pandas import Series
 
 def check_feature_length(feature: Series, max_feature_length: int) -> bool:
-    return feature[4]- feature[3] <= max_feature_length
+    return feature["end"]- feature["start"] <= max_feature_length
 
 def check_strandedness(feature1: Series, feature2: Series, strict=False):
     """
@@ -18,13 +25,13 @@ def check_strandedness(feature1: Series, feature2: Series, strict=False):
               Else:      Also returns True if strands aren not known to be different
     """
     if strict:
-        if not feature1[6]=="." or feature2[6]==".":
-            if feature1[6]==feature2[6]:
+        if not feature1["strand"]=="." or feature2["strand"]==".":
+            if feature1["strand"]==feature2["strand"]:
                 return True
     else:
-        if feature1[6]=="." or feature2[6]==".":
+        if feature1["strand"]=="." or feature2["strand"]==".":
             return True
-        if feature1[6]==feature2[6]:
+        if feature1["strand"]==feature2["strand"]:
             return True
     return False
 
@@ -42,14 +49,14 @@ def check_extends(ta_exon: Series, gp_exon: Series, tran: Series) -> bool:
               False else
     """
     # Checks if the ta_exon extends the transcript to the left
-    if (int(ta_exon[3])<int(tran[3])):
+    if (int(ta_exon["start"])<int(tran["start"])):
         # Checks if the transcript end at the same position
-        if (int(ta_exon[4])==int(gp_exon[4])):
+        if (int(ta_exon["end"])==int(gp_exon["end"])):
             return True
     # Checks if the ta_exon extends the transcript to the left
-    if (int(ta_exon[4])>int(tran[4])):
+    if (int(ta_exon["end"])>int(tran["end"])):
         # Checks if the transcript starts at the same position     
-        if (int(ta_exon[3])==int(gp_exon[3])):    
+        if (int(ta_exon["start"])==int(gp_exon["start"])):    
             return True
     return False
 
