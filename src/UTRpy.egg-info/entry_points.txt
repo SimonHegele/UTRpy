@@ -1,2 +1,0 @@
-[console_scripts]
-utrpy = utrpy.utrpy_main:main
