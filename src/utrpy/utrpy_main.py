@@ -1,52 +1,50 @@
-from logging         import info
-from pandas          import DataFrame
-from multiprocessing import Pool
-from numpy           import sum
+"""
+Script Name:    utrpy_main.py
+Description:    Main script of UTRpy
+                Note that this script is not intended for direct execution,
+                please refer to the README.md for instructions on installation and usage.
+Author:         Simon Hegele
+Date:           2025-04-01
+Version:        0.2
+License:        GPL-3
+"""
 
-from .utrpy_argumentparser import UTRpyArgparser
-from .utrpy_utr_add        import add_utrs
-from .utrpy_io             import load_data, write_data
-from .utrpy_logging        import logging_setup
-from .utrpy_exon_extend    import exon_extend_threaded
-from .utrpy_scaffold_split import scaffold_split
+from logging                import info
+from time                   import time
+
+from .utrpy_argumentparser  import UTRpyArgparser
+from .utrpy_exon_extend     import exon_extend_multithreaded
+from .utrpy_io              import load_data, write_data
+from .utrpy_logging         import logging_setup
+from .utrpy_utr_add         import add_utrs_multithreaded
+
+def time_format(seconds):
+
+    seconds = int(seconds)
+    hours,   seconds = divmod(seconds, 3600)
+    minutes, seconds = divmod(seconds, 60)
+    return f"{hours:02}h:{minutes:02}m:{seconds:02}s"
 
 def main():
 
-    args  = UTRpyArgparser().parse_args()
+    start       = time()
+    utrpy_args  = UTRpyArgparser().parse_args()
 
-    logging_setup("info", f"{args.gff_utrpy}.log")
+    logging_setup("info", f"{utrpy_args.gff_utrpy}.log")
 
-    gff_prediction, gff_assembly = load_data(args)
+    gff_prediction, gff_assembly, seqnames = load_data(utrpy_args)
 
-
-    scaffolds      = list(gff_prediction[0].unique())
-    gff_prediction = scaffold_split(gff_prediction)
-    gff_assembly   = scaffold_split(gff_assembly)
-
-    info("Extending exons ...")
-    mp_args = zip([gff_prediction[s] for s in scaffolds],
-                  [gff_assembly[s] if s in gff_assembly.keys() else DataFrame() for s in scaffolds],
-                  [args.strict_strandedness for _ in scaffolds],
-                  [args.maximum_exon_length for _ in scaffolds])
+    gff_utrpy = exon_extend_multithreaded(gff_prediction,
+                                          gff_assembly,
+                                          seqnames,
+                                          utrpy_args)
     
-    with Pool(processes=args.threads) as pool:
-        results = pool.map(exon_extend_threaded, mp_args)
-        gffs    = [r[0] for r in results]
+    if utrpy_args.explicit:
+        gff_utrpy = add_utrs_multithreaded(gff_utrpy, utrpy_args.threads)
 
-    info(f"Done all  (Extended exons: {sum([r[1] for r in results])})")
+    write_data(utrpy_args, gff_utrpy, seqnames)
 
-    if args.explicit:
-        info("Adding UTRs")
-        with Pool(processes=args.threads) as pool:
-            results = pool.map(add_utrs, gffs)
-            gffs    = [r[0] for r in results]
-            info(f"Done all  (Annotated UTRs: {sum([r[1] for r in results])})")
-
-    write_data(args, gffs, scaffolds)
-
-    info("++++++++++++++++++++++++++++++++++")
-    info("Simon says: thanks for using UTRpy")
-    info("++++++++++++++++++++++++++++++++++")
-
-if __name__ == '__main__':
-    main()
+    info(f"Completed after {time_format(time()-start)}")
+    info("#############################################")
+    info("#    Simon says: Thanks for using UTRpy!    #")
+    info("#############################################")
