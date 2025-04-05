@@ -54,6 +54,7 @@ Annotation from gene prediction (GFF)
 - **gff_prediction**<br>
 Annotation from transcriptome assembly (GFF/GTF)
 - **gff_utrpy**<br>
+Outfile to write to<br>
 Annotation from gene prediction with UTR extensions (GFF)
 - **-a / --ambiguities**<br>
 How to deal with ambiguities:
