@@ -60,6 +60,7 @@ How to deal with ambiguities:
 For an exon from the gene prediction there might be multiple exons of different lengths<br>
 from the transcriptome assembly that contain an UTR extension.
 If so, none, the smallest or the longest can be choosen.
+Default: smallest
 - **-e / --explicit**<br>
 Explicitly add 5'-UTRs and 3'UTRs as features to the output GFF.<br>
 Requires the transcript ID to be included in the attribute values of their corresponding<br>
@@ -72,6 +73,9 @@ Otherwise, exons of unknown strands are allowed.
 Exons from the transcriptome assembly exceeding this length are considered to be incorrect<br>
 and are not used.<br>
 Default: 20000
+- **-t / --threads**<br>
+Chromosomes / Scaffolds can be processsed in parallel.<br> 
+Default: 4
 
 ### 2.2 Output
 
