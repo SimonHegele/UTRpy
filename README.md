@@ -87,7 +87,7 @@ In the output GFF any comments from the original GFF are removed.
 **Example:**
 
 <p align="left">
-  <img src="figures/IGV.png" width="700"/>
+  <img src="figures/IGV.png" width="800"/>
 </p>
 IGV-browser screenshot
 
