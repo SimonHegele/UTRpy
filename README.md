@@ -55,7 +55,7 @@ Annotation from gene prediction (GFF)
 Annotation from transcriptome assembly (GFF/GTF)
 - **gff_utrpy**<br>
 Annotation from gene prediction with UTR extensions (GFF)
-- **-a / --ambiguities**
+- **-a / --ambiguities**<br>
 How to deal with ambiguities:
 For an exon from the gene prediction there might be multiple exons of different lengths<br>
 from the transcriptome assembly that contain an UTR extension.
