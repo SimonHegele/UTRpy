@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="UTRpy",
-    version="0.1",
+    version="0.2",
     license="GPL3",
     description="UTR extensions for annotations from protein orthology based gene prediction tools using exons from reference based transcriptome assembly",
     package_dir={"": "src"},
