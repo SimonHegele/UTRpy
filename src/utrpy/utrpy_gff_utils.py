@@ -43,7 +43,7 @@ def next_feature_index(gff: DataFrame, i: int, feature_type:str) -> int | None:
         feature_type (str): A feature type
 
     Returns:
-        int | None: Next index of a row with the specified feature type or None if there
+        int | None: Next position of a row with the specified feature type or None if there
                     is no such index.
     """
     while True:
@@ -55,7 +55,7 @@ def next_feature_index(gff: DataFrame, i: int, feature_type:str) -> int | None:
         
 def get_attributes_dict(feature: Series) -> dict:
     """
-    Parses the attributes field of a feature to dict
+    Parses the attributes field of a feature to dictionary
     """
     return {a.split("=")[0]: a.split("=")[1] for a in feature["attributes"].split(";")}
 
@@ -71,15 +71,14 @@ def get_seqnames(gff: DataFrame) -> list[str]:
 
 def seqname_split_sort(gff: DataFrame, seqnames=None) -> dict[str, DataFrame]:
     """
-    Splits the GFF-file into parts according to their reference sequence
-    Also sorst them by start positions and resets the index
-
     Args:
         gff (DataFrame):                GFF-file
         seqnames (list[str], optional): List of seqnames. Defaults to None.
 
     Returns:
-        dict[str, DataFrame]: A dictionary mapping seqnames to their respective sub-GFF
+        dict[str, DataFrame]: key:   seqname
+                              value: DataFrame with features from seqname sorted by
+                                     start 
     """
     if seqnames is None:
         seqnames = get_seqnames(gff)
@@ -96,9 +95,9 @@ def get_feature_ancestor(gff: DataFrame, feature: dict, ancestor_type: str) -> S
     b) By recursively traversing the GFF-hierarchy following the child-parent relationship
 
     Args:
-        gff (DataFrame):        _description_
-        feature (dict):         _description_
-        ancestor_type (str):    _description_
+        gff (DataFrame):        
+        feature (dict):        
+        ancestor_type (str):    
 
     Raises:
         Exception: When an ancestor of the specified type could not be found.
@@ -116,17 +115,14 @@ def get_feature_ancestor(gff: DataFrame, feature: dict, ancestor_type: str) -> S
     attributes = get_attributes_dict(feature)
 
     if f"{ancestor_type}_id" in attributes.keys():
-
         ancestor_id = attributes[f"{ancestor_type}_id"]
         ancestor    = gff.loc[gff["attributes"].str.contains(f"ID={ancestor_id}", na=False)].iloc[0]
         return ancestor
     
     elif "Parent" in attributes.keys():
-
         parent_id = attributes["Parent"]
         parent    = gff.loc[gff["attributes"].str.contains(f"ID={parent_id}", na=False)].iloc[0]
         return get_feature_ancestor(gff, parent, ancestor_type)
     
     fs = get_feature_string(feature)
-
     raise Exception(f"Unable to find ancestor of type {ancestor_type} for feature\n{fs}")
