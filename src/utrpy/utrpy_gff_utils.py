@@ -22,8 +22,6 @@ gff_columns = ["seqname",
 
 def load_gff(file_path: str) -> DataFrame:
     """
-    Loading GFF-file
-
     Args:
         file_path (str): location of the GFF-file in the file system
 
@@ -34,9 +32,6 @@ def load_gff(file_path: str) -> DataFrame:
 
 def next_feature_index(gff: DataFrame, i: int, feature_type:str) -> int | None:
     """
-    Determines the next position in the GFF were a row with the specified feature type can
-    be found.
-
     Args:
         gff (DataFrame):    A pandas DataFrame representing a GFF file (or part of it)
         i (int):            An index refering to a position in the GFF file (or part of it)
