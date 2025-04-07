@@ -1,5 +1,5 @@
 """
-Script Name:    utrpy_io.py
+Module Name:    utrpy_io.py
 Description:    File reading / Writing
 Author:         Simon Hegele
 Date:           2025-04-01
