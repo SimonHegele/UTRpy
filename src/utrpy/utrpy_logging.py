@@ -1,5 +1,5 @@
 """
-Script Name:    utrpy_logging.py
+Module Name:    utrpy_logging.py
 Description:    Provides function logging_setup()
 Author:         Simon Hegele
 Date:           2025-04-01
