@@ -96,7 +96,7 @@ In the output GFF any comments from the original GFF are removed.
 </p>
 IGV-browser screenshot
 
-## Identifying matching pairs of exons
+## 3 Identifying matching pairs of exons
 
 The decision if in a pair of exons the exon from the transcriptome assembly (exon_ta) is<br>
 an UTR-extension for the exon from the gene prediction (exon_gp) and its corresponding<br>
@@ -108,11 +108,11 @@ transcript (tran_gp) is based on the following criteria:
 
 All potential (overlapping) pairs of exons are checked for those criteria.
 
-## 3 Limitations / Known issues
+## 4 Limitations / Known issues
 
 - mRNA features are ignored
 - UTRpy cannot make coffee
 
-## 4 Future plans / ideas
+## 5 Future plans / ideas
 
 - Pandas -> Polars
