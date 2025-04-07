@@ -1,7 +1,7 @@
 """
-Script Name:    utrpy_argumentparser.py
-Description:    Provides UTRpyArgparser(ArgumentParser)
-                - Required arguments added on initialization
+Module Name:    utrpy_argumentparser.py
+Description:    Provides class UTRpyArgparser(ArgumentParser)
+                - Arguments added on initialization
                 - Extended parse_args() to check input and write a file with the parameters
 Author:         Simon Hegele
 Date:           2025-04-01
@@ -66,13 +66,13 @@ class UTRpyArgparser(ArgumentParser):
 
         with open(f"{self.args.gff_utrpy}.param", "w") as param_file:
             
-            # Files
             param_file.write("{0:<15} {1:<15}\n".format("gff_prediction",   self.args.gff_prediction))
             param_file.write("{0:<15} {1:<15}\n".format("gff_assembly",     self.args.gff_assembly))
             param_file.write("{0:<15} {1:<15}\n".format("gff_utrpy",        self.args.gff_utrpy))
+            param_file.write("{0:<15} {1:<15}\n".format("--ambiguities",    self.args.ambiguities))
+            param_file.write("{0:<15} {1:<15}\n".format("--max_ex_len",     self.args.max_ex_len))
             param_file.write("{0:<15} {1:<15}\n".format("--know_strand",    self.args.know_strand))
             param_file.write("{0:<15} {1:<15}\n".format("--explicit",       self.args.explicit))
-            param_file.write("{0:<15} {1:<15}\n".format("--max_ex_len",     self.args.max_ex_len))
             param_file.write("{0:<15} {1:<15}\n".format("--threads",        self.args.threads))
 
     def check_input(self):
@@ -82,7 +82,6 @@ class UTRpyArgparser(ArgumentParser):
         if not isfile(self.args.gff_assembly):
             raise FileNotFoundError(f"{self.args.gff_assembly}")
         if isfile(self.args.gff_utrpy):
-            print("File exists")
             raise FileExistsError(f"{self.args.gff_utrpy}")
 
     def parse_args(self):
