@@ -1,5 +1,5 @@
 """
-Script Name:    utrpy_check.py
+Module Name:    utrpy_check.py
 Description:    Provides function check() (and helper functions) to evaluates if an exon
                 from the transcriptome assembly has an exon extension for an exon from the
                 gene prediction
