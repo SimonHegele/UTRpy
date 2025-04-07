@@ -50,7 +50,7 @@ def exon_matches(gff_gp: DataFrame,
 
     i = next_feature_index(gff_gp, -1, "exon")
 
-    while i != None:
+    while not i is None:
 
         gp_exon  = gff_gp.iloc[i]
         gp_tran  = get_feature_ancestor(gff_gp, gp_exon, "transcript")
