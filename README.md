@@ -70,14 +70,15 @@ For the prediction the preprocessing can be skipped using the -pp / --pinky_prom
 Explicit representations of transcripts can be created from the annotations.
 These are created for all predicted transcripts and for assembled transcripts whose genomic position includes those of predicted transcripts.<br>
 The figure below shows a match between a predicted transcript (green) and an assembled one (blue)
-<p align="center">
-  <img src="figures/match.png" width="500"/>
-</p>
 3. UTR-variant construction<br>
 For matching pairs of transcripts UTR-variants are created combining the features of both transcripts (without duplicating exons) and replace the original predicted transcript in the annotation.
 Gene start and end positions are updated accordingly.
 4. Postprocessing with AGAT<br>
 AGAT is used to explicitly add UTRs as features to the annotation.
+
+<p align="center">
+  <img src="figures/match.png" width="500"/>
+</p>
 
 ## 4 Example
 
