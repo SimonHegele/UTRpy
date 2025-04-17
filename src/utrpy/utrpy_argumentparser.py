@@ -36,7 +36,7 @@ class UTRpyArgparser(argparse.ArgumentParser):
         self.add_argument("outdir",
                           help="Output directory (Must not exist already)")
         self.add_argument("-pp","--pinky_promise",
-                          help="Pinky promise that gff_prediction is correct (Will fix it otherwise)",
+                          help="Pinky promise that prediction is correct (Will fix it otherwise)",
                           metavar="")
         
         # Transcript matching
@@ -83,8 +83,8 @@ class UTRpyArgparser(argparse.ArgumentParser):
 
         with open(os.path.join(self.args.outdir, "utrpy.param"), "w") as param_file:
             
-            param_file.write(f"gff_prediction   {self.args.gff_prediction:<15}\n")
-            param_file.write(f"gff_assembly     {self.args.gff_assembly:<15}\n")
+            param_file.write(f"prediction   {self.args.prediction:<15}\n")
+            param_file.write(f"assembly     {self.args.assembly:<15}\n")
             param_file.write(f"--match          {self.args.match:<15}\n")
             param_file.write(f"--select         {self.args.select:<15}\n")
             param_file.write(f"--know_strand    {self.args.know_strand:<15}\n")
@@ -94,11 +94,11 @@ class UTRpyArgparser(argparse.ArgumentParser):
 
     def check_input(self):
 
-        if not os.path.isfile(self.args.gff_prediction):
-            logging.error(f"{self.args.gff_prediction} is not a file")
+        if not os.path.isfile(self.args.prediction):
+            logging.error(f"{self.args.prediction} is not a file")
             exit(1)
-        if not os.path.isfile(self.args.gff_assembly):
-            logging.error(f"{self.args.gff_assembly} is not a file")
+        if not os.path.isfile(self.args.assembly):
+            logging.error(f"{self.args.assembly} is not a file")
             exit(1)
         if os.path.isdir(self.args.outdir):
             logging.error(f"{self.args.outdir} is exists")
