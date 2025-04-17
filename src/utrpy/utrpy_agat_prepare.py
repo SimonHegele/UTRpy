@@ -15,30 +15,30 @@ import subprocess
 
 def agat_prepare(args: argparse.Namespace) -> None:
 
-    if args.gff_assembly.endswith(".gtf"):
+    if args.assembly.endswith(".gtf"):
         subprocess.run(["agat_convert_sp_gxf2gxf.pl",
-                        "--gtf", args.gff_assembly,
+                        "--gtf", args.assembly,
                         "-o", os.path.join(args.tmpdir, "assembly.gff")],
                         check=True)
-    if args.gff_assembly.endswith(".gff"):
+    if args.assembly.endswith(".gff"):
         subprocess.run(["agat_convert_sp_gxf2gxf.pl",
-                        "--gff", args.gff_assembly,
+                        "--gff", args.assembly,
                         "-o", os.path.join(args.tmpdir, "assembly.gff")],
                         check=True)
 
     if args.pinky_promise:
         subprocess.run(["cp",
-                        args.gff_prediction,
+                        args.prediction,
                         os.path.join(args.tmpdir, "prediction.gff")],
                         check=True)
     else:
-        if args.gff_assembly.endswith(".gtf"):
+        if args.assembly.endswith(".gtf"):
             subprocess.run(["agat_convert_sp_gxf2gxf.pl",
-                            "--gtf", args.gff_prediction,
+                            "--gtf", args.prediction,
                             "-o", os.path.join(args.tmpdir, "prediction.gff")],
                             check=True)
-        if args.gff_assembly.endswith(".gff"):
+        if args.assembly.endswith(".gff"):
             subprocess.run(["agat_convert_sp_gxf2gxf.pl",
-                            "--gff", args.gff_prediction,
+                            "--gff", args.prediction,
                             "-o", os.path.join(args.tmpdir, "prediction.gff")],
                             check=True)  
