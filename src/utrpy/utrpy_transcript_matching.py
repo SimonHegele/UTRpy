@@ -99,7 +99,8 @@ def transcript_matches(p_transcript: Transcript,
                        match_middle_exons: bool,
                        max_exon_length: int) -> typing.Generator:
     
-    a_transcripts = included_features(a_gff, p_transcript, "RNA")
+    a_transcripts = pandas.concat([included_features(a_gff, p_transcript, "RNA"),
+                                   included_features(a_gff, p_transcript, "transcript")])
 
     a_transcripts = a_transcripts[
         a_transcripts.apply(lambda t: check_strands(t,
