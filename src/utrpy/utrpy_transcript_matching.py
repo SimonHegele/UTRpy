@@ -20,8 +20,12 @@ def first_matching_exon(p_transcript: Transcript,
     
     for i in range(len(a_transcript.exons)):
         if a_transcript.exons.iloc[i]["start"] >= p_transcript.exons.iloc[0]["start"]:
+            logging.debug(f"First exon {list(p_transcript.exons.iloc[0])} unmatched")
             break
         if a_transcript.exons.iloc[i]["end"] == p_transcript.exons.iloc[0]["end"]:
+            msg = f"First matching exons: {list(a_transcript.exons.iloc[i]),
+                                          list(p_transcript.exons.iloc[0])}"
+            logging.debug(msg)
             return i
         
 def last_matching_exon(p_transcript: Transcript,
@@ -29,8 +33,12 @@ def last_matching_exon(p_transcript: Transcript,
     
     for i in reversed(range(len(a_transcript.exons))):
         if a_transcript.exons.iloc[i]["end"] <= p_transcript.exons.iloc[-1]["end"]:
+            logging.debug(f"Last exon {list(p_transcript.exons.iloc[0])} unmatched")
             break
         if a_transcript.exons.iloc[i]["start"] == p_transcript.exons.iloc[-1]["start"]:
+            msg = f"Last matching exons: {list(a_transcript.exons.iloc[i]),
+                                          list(p_transcript.exons.iloc[-1])}"
+            logging.debug(msg)
             return i
         
 def all_middle_exons_match(p_transcript: Transcript,
@@ -81,10 +89,15 @@ def transcript_match(p_transcript: Transcript,
                      a_transcript: Transcript,
                      match_middle_exons) -> dict | None:
     
+    logging.debug(f"Matching transcripts {p_transcript.id, a_transcript.id}")
+    
     if len(p_transcript.exons) == 1:
-        return match_single_exon(p_transcript, a_transcript)
+        m = match_single_exon(p_transcript, a_transcript)
     else:
-        return match_multiple_exons(p_transcript, a_transcript, match_middle_exons)
+        m = match_multiple_exons(p_transcript, a_transcript, match_middle_exons)
+    
+    logging.debug("No match" if m is None else (m["start"],m["end"]))
+    return m
     
 def check_exon_lengths(transcript: Transcript, max_exon_length) -> bool:
 
@@ -111,7 +124,6 @@ def transcript_matches(p_transcript: Transcript,
     p_transcript = Transcript(p_transcript, p_gff)
 
     if len(p_transcript.exons) == 0:
-        logging.error(f"No exons found for transcript {p_transcript.id}")
         return
 
     for i, a_transcript in a_transcripts.iterrows():

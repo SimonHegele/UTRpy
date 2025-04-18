@@ -65,7 +65,7 @@ class UTRpyArgparser(argparse.ArgumentParser):
                           help="Keep the original transcript instead of deleting them",
                           metavar="",)
     
-        self.add_argument("-t","--tmpdir",
+        self.add_argument("-tmp","--tmpdir",
                           help="Temporary directory",
                           metavar="",
                           default=f"tmp_{datetime.datetime.now()}")
@@ -101,7 +101,7 @@ class UTRpyArgparser(argparse.ArgumentParser):
             logging.error(f"{self.args.assembly} is not a file")
             exit(1)
         if os.path.isdir(self.args.outdir):
-            logging.error(f"{self.args.outdir} is exists")
+            logging.error(f"{self.args.outdir} exists")
             exit(1)
 
     def parse_args(self):

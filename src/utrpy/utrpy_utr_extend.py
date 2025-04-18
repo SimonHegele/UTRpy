@@ -12,7 +12,7 @@ def select_from_variants(variants: list[dict], select: str):
     if select == "all":
         return variants
     
-    exons   = [v.loc[v["type"]=="exon"] for v in variants]
+    exons   = [v["transcript"].loc[v["type"]=="exon"] for v in variants]
     lengths = [numpy.sum(e["end"]-e["start"]-1) for e in exons]
         
     match select:
@@ -51,6 +51,8 @@ def utr_extend(p_gff: pandas.DataFrame,
 
     for i, p_transcript in p_transcripts.iterrows():
 
+        transcript_id = attributes_dict(p_transcript)["ID"]
+
         matches = list(transcript_matches(p_transcript,
                                           p_gff,
                                           a_gff,
@@ -60,19 +62,16 @@ def utr_extend(p_gff: pandas.DataFrame,
         
         if any(matches):
 
-            utr_variants = select_from_variants([utr_variant(match, p_gff, i)
-                                                 for i, match in enumerate(matches)],
-                                                 select)
+            utr_variants = [utr_variant(match, p_gff, i)
+                            for i, match in enumerate(matches)]
+            utr_variants = [v for v in utr_variants if not v is None]
             
-            to_delete.append(matches[0]["p_transcript"])
+            if any(utr_variants):
 
-            all_utr_variants += utr_variants
-
-            transcript_id = attributes_dict(p_transcript)["ID"]
-            logging.info(f"{transcript_id:<70} {len(utr_variants)} UTR-variants")
-
+                utr_variants = select_from_variants(utr_variants, select)
+                to_delete.append(matches[0]["p_transcript"])
+                all_utr_variants += utr_variants
         else:
-
             utr_variants = []
             
         logging.info(f"{transcript_id:<70} {len(utr_variants)} UTR-variants")

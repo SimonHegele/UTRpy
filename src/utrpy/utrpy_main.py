@@ -17,6 +17,7 @@ def main():
 
     logging_setup(args)
 
+    logging.info("Preprocessing with AGAT")
     agat_prepare(args)
 
     p_gff = load_gff(os.path.join(args.tmpdir, "prediction.gff"))

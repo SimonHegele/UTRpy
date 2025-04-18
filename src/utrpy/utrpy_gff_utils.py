@@ -84,6 +84,26 @@ def get_ancestor(gff: pandas.DataFrame,
     Returns:
         Series: ancestor feature of the specified type for the input feature
     """
+
+    ancestor = feature
+
+    for i in range(5):
+        if type==(ancestor["type"]):
+            return feature
+        attrs = attributes_dict(ancestor)
+        if f"{type}_id" in attrs.keys():
+            id        = attrs[f"{type}_id"]
+            return gff.loc[gff["attributes"].str.contains(f"ID={id}", na=False)].iloc[0]
+        if "Parent" in attrs.keys():
+            id       = attrs["Parent"]
+            ancestor = gff.loc[gff["attributes"].str.contains(f"ID={id};", na=False)]
+            if len(ancestor) == 0:
+                break           
+            ancestor = ancestor.iloc[0]
+    
+    logging.error(f"Failed to find ancestor of type {type} for {list(feature)}")
+
+    """
     
     if type==(feature["type"]):
         return feature
@@ -101,6 +121,8 @@ def get_ancestor(gff: pandas.DataFrame,
         return get_ancestor(gff, parent, type)
     
     logging.error(f"Could not find ancestor of type {type} for {list(feature)}")
+
+    """
 
 def feature_includes(feature_1, feature_2):
     """

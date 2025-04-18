@@ -1,8 +1,19 @@
+import logging
 import pandas
 
 from .utrpy_gff_utils import overlapping_features, attributes_dict
 
 class Transcript():
+
+    def is_transcript_feature(self, feature: pandas.Series) -> bool:
+
+        attrs = attributes_dict(feature)
+
+        if "transcript_id" in attrs.keys() and attrs["transcript_id"]==self.id:
+            return True
+        if "Parent" in attrs.keys() and attrs["Parent"]==self.id:
+            return True
+        return False
 
     def get_features(self, gff):
 
@@ -10,7 +21,7 @@ class Transcript():
 
         return features[
             features.apply(
-                lambda exon: False if "transcript_id" not in attributes_dict(exon) else attributes_dict(exon)["transcript_id"]==self.id,
+                lambda feature: self.is_transcript_feature(feature),
                 axis=1
             )
         ]
@@ -23,6 +34,11 @@ class Transcript():
         self.data     : pandas.Series    = row
         self.features : pandas.DataFrame = self.get_features(gff)
         self.exons    : pandas.DataFrame = self.features.loc[self.features["type"]=="exon"]
+
+        if len(self.features)==0:
+            logging.error(f"No features found for transcript {self.id}")
+        if len(self.exons)==0:
+            logging.error(f"No exons found for transcript {self.id}")
     
     def delete(self, gff: pandas.DataFrame) -> pandas.DataFrame:
 
