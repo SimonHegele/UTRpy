@@ -60,6 +60,13 @@ options:
   -l , --log_level      [default: info]
 ```
 
+Restriction for the annotation from the prediction:<br>
+The ID of a gene must not be the last attribute. Example:<br>
+ID=id;attr1=value1;attr2=value2 is ok<br>
+attr1=value1;ID=id;attr2=value2 is ok<br>
+attr1=value1;attr2=value2;ID=id is not ok<br>
+UTRpy will skip transcripts of such genes.
+
 ## 3 UTRpy workflow
 
 1. Preprocessing with AGAT<br>
@@ -89,7 +96,8 @@ Screenshot from the IGV-genome browser
 
 ## 4 Limitations / Known issues
 
-Potential gene fusions (real or assembly artifacts).
+- Potential gene fusions (real or assembly artifacts).
+- Rarely fails to identify parent genes of transcripts.
 
 ## 5 Future plans / ideas
 
