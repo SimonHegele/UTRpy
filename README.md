@@ -96,7 +96,7 @@ Screenshot from the IGV-genome browser
 
 ## 4 Limitations / Known issues
 
-- Potential gene fusions (real or assembly artifacts).
+- Gene fusions are not recognized as such and can result in overlapping duplicated genes
 
 ## 5 Future plans / ideas
 
