@@ -97,7 +97,6 @@ Screenshot from the IGV-genome browser
 ## 4 Limitations / Known issues
 
 - Potential gene fusions (real or assembly artifacts).
-- Rarely fails to identify parent genes of transcripts.
 
 ## 5 Future plans / ideas
 
