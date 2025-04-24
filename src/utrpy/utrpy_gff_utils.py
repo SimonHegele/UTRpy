@@ -69,60 +69,26 @@ def get_ancestor(gff: pandas.DataFrame,
     Returns the ancestor of the specified type for the input feature
     a) Directly, if <ancestor_type>_id=ancestor is in the attributes column or
     b) By recursively following the GFF-hierarchy following the child-parent relationship
-
-    Args:
-        gff (DataFrame):        
-        feature (dict):        
-        ancestor_type (str):    
-
-    Raises:
-        Exception: When an ancestor of the specified type could not be found.
-                   -> Wrong use (e.g. searching ancestor of type exon for feature of type
-                      gene)
-                   -> ill-formatted GFF
-
-    Returns:
-        Series: ancestor feature of the specified type for the input feature
     """
 
     ancestor = feature
 
-    for i in range(5):
-        if type==(ancestor["type"]):
-            return feature
-        attrs = attributes_dict(ancestor)
-        if f"{type}_id" in attrs.keys():
-            id        = attrs[f"{type}_id"]
-            return gff.loc[gff["attributes"].str.contains(f"ID={id}", na=False)].iloc[0]
-        if "Parent" in attrs.keys():
-            id       = attrs["Parent"]
-            ancestor = gff.loc[gff["attributes"].str.contains(f"ID={id};", na=False)]
-            if len(ancestor) == 0:
-                break           
-            ancestor = ancestor.iloc[0]
-    
-    logging.error(f"Failed to find ancestor of type {type} for {list(feature)}")
+    try:
+        for _ in range(5): 
+            if type==(ancestor["type"]):
+                return ancestor
+            attrs = attributes_dict(ancestor)
+            if f"{type}_id" in attrs.keys():
+                id = attrs[f"{type}_id"]
+            elif "Parent" in attrs.keys():
+                id = attrs["Parent"]
+            ancestor = gff[gff.apply(lambda f: attributes_dict(f)["ID"]==id, axis=1)].iloc[0]
 
-    """
-    
-    if type==(feature["type"]):
-        return feature
+        logging.error(f"Failed to find ancestor of type {type} for {list(feature)}")
 
-    attributes = attributes_dict(feature)
+    except Exception as e:
 
-    if f"{type}_id" in attributes.keys():
-        ancestor_id = attributes[f"{type}_id"]
-        ancestor    = gff.loc[gff["attributes"].str.contains(f"ID={ancestor_id}", na=False)].iloc[0]
-        return ancestor
-    
-    elif "Parent" in attributes.keys():
-        parent_id = attributes["Parent"]
-        parent    = gff.loc[gff["attributes"].str.contains(f"ID={parent_id}", na=False)].iloc[0]
-        return get_ancestor(gff, parent, type)
-    
-    logging.error(f"Could not find ancestor of type {type} for {list(feature)}")
-
-    """
+        logging.error(f"Failed to find ancestor of type {type} for {list(feature)}\n{e}")
 
 def feature_includes(feature_1, feature_2):
     """
