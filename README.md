@@ -9,8 +9,7 @@ complete, right?
 Protein ortholog-based gene prediction enables the transfer of detailed gene structure and<br>
 functional annotations across species by leveraging evolutionary conservation. However,<br>
 genome annotations from such methods lack UTRs. UTRpy supplements these by using exons<br>
-from reference based
-assemblies.
+from reference-based transcriptome assemblies.
 
 ## 1 Installation
 
@@ -59,13 +58,6 @@ options:
   -p , --processes      Number of parallel processes to use [Default:4]
   -l , --log_level      [default: info]
 ```
-
-Restriction for the annotation from the prediction:<br>
-The ID of a gene must not be the last attribute. Example:<br>
-ID=id;attr1=value1;attr2=value2 is ok<br>
-attr1=value1;ID=id;attr2=value2 is ok<br>
-attr1=value1;attr2=value2;ID=id is not ok<br>
-UTRpy will skip transcripts of such genes.
 
 ## 3 UTRpy workflow
 
