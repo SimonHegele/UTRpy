@@ -16,14 +16,14 @@ assemblies.
 
 Requirements:
 
-Python >= 3.10
+Python = 3.13
 - Pandas
 - Numpy
 
 AGAT (https://github.com/NBISweden/AGAT)
 
 ```
-conda create -n utrpy python=3.10
+conda create -n utrpy python=3.13
 conda activate utrpy
 
 mamba install -c conda-forge -c bioconda agat
