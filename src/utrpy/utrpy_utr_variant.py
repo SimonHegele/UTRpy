@@ -100,7 +100,7 @@ def utr_variant(transcript_match: dict,
     if gene is None:
         return None
     
-    gene_id       = "???" if gene is None else attributes_dict(gene)["ID"]
+    gene_id       = attributes_dict(gene)["ID"]
     transcript_id = create_transcript_id(transcript_match, variant)
     predictor     = p_transcript.exons.iloc[0]["source"]
     assembler     = a_transcript.exons.iloc[0]["source"]
