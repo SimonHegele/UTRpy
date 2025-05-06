@@ -90,6 +90,11 @@ Screenshot from the IGV-genome browser
 
 - Gene fusions are not recognized as such and can result in overlapping duplicated genes
 
+<p align="center">
+  <img src="figures/genefusion.png" width="800"/>
+</p>
+Screenshot from the IGV-genome browser.
+
 ## 5 Future plans / ideas
 
 Performance:
