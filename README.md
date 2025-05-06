@@ -95,3 +95,10 @@ Screenshot from the IGV-genome browser
 Performance:
 - Pandas -> Polars
 - A "smart" way to split DataFrames
+
+Limitations:
+- Addressing gene fusion
+    1. Identification of potential gene fusion
+       -> Sufficient to guide manual curation.
+    2. Automatically merging fused genes.
+ 
