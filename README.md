@@ -88,7 +88,7 @@ Screenshot from the IGV-genome browser
 
 ## 4 Limitations / Known issues
 
-- Gene fusions are not recognized as such and can result in overlapping duplicated genes
+- Gene fusions are not recognized as such and can result in overlapping duplicated genes (rare)
 
 <p align="center">
   <img src="figures/genefusion.png" width="800"/>
