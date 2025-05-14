@@ -86,7 +86,7 @@ AGAT is used to explicitly add UTRs as features to the annotation.
 </p>
 Screenshot from the IGV-genome browser
 
-## 4 Limitations / Known issues
+## 5 Limitations / Known issues
 
 - Gene fusions are not recognized as such and can result in overlapping duplicated genes (rare)
 
@@ -95,7 +95,7 @@ Screenshot from the IGV-genome browser
 </p>
 Screenshot from the IGV-genome browser.
 
-## 5 Future plans / ideas
+## 6 Future plans / ideas
 
 Performance:
 - Pandas -> Polars
