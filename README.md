@@ -34,8 +34,7 @@ pip install .
 ## 2 Usage
 
 ```
-utrpy -h
-usage: utrpy [-h] [-pp] [-m] [-ks] [-me] [-s] [-k] [-t] [-p] [-l] gff_prediction gff_assembly outdir
+usage: utrpy [-h] [-m ] [-ks] [-me ] [-s ] [-k ] [-p ] [-pp ] [-tmp ] [-l ] prediction assembly outdir
 
 UTR extension of transcript exons from protein orthology based gene prediction using exons from reference based assembly
 
@@ -46,17 +45,23 @@ positional arguments:
 
 options:
   -h, --help            show this help message and exit
-  -pp , --pinky_promise
-                        Pinky promise that gff_prediction is a correctly formatted GFF3-file
-  -m , --match          What exons of predicted transcripts to match [choices: ends, all] [default: all]
+
+Transcript matching:
+  -m, --match           What exons of predicted transcripts to match [choices: ends, all] [default: all]
   -ks, --know_strand    Use only transcripts where the strand is known
-  -me , --max_exon_length
+  -me, --max_exon_length
                         Don't use assembled transcripts with exons longer than this [default: 20000]
-  -s , --select         How to select UTR-variants if there are multiple [choices: shortest, longest, all] [default: all]
-  -k , --keep           Keep the original transcript instead of deleting them
-  -t , --tmpdir         Temporary directory
-  -p , --processes      Number of parallel processes to use [Default:4]
-  -l , --log_level      [default: info]
+
+UTR-variant selection:
+  -s, --select          How to select UTR-variants if there are multiple [choices: shortest, longest, all] [default: all]
+  -k, --keep            Keep the original transcript instead of deleting them
+
+Others:
+  -p, --processes       Number of parallel processes to use [Default:4]
+  -pp, --pinky_promise
+                        Pinky promise that prediction is correct (Will fix it otherwise)
+  -tmp, --tmpdir        Temporary directory
+  -l, --log_level       [default: info]
 ```
 
 ## 3 UTRpy workflow
