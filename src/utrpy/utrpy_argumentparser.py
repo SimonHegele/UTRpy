@@ -39,7 +39,7 @@ class UTRpyArgparser(argparse.ArgumentParser):
                           help="Pinky promise that prediction is correct (Will fix it otherwise)",
                           metavar="")
         
-        # Transcript matching
+        self.add_argument_group(title="Transcript matching")
         self.add_argument("-m", "--match",
                           help="What exons of predicted transcripts to match"
                           " [choices: ends, all] [default: all]",
@@ -55,7 +55,7 @@ class UTRpyArgparser(argparse.ArgumentParser):
                           type=int,
                           default=20000)
         
-        # UTR-variant selection
+        self.add_argument_group(title="UTR-variant selection")
         self.add_argument("-s", "--select",
                           help="How to select UTR-variants if there are multiple [choices: shortest, longest, all] [default: all]",
                           choices=["shortest", "longest", "all"],
@@ -64,16 +64,17 @@ class UTRpyArgparser(argparse.ArgumentParser):
         self.add_argument("-k","--keep",
                           help="Keep the original transcript instead of deleting them",
                           metavar="",)
-    
-        self.add_argument("-tmp","--tmpdir",
-                          help="Temporary directory",
-                          metavar="",
-                          default=f"tmp_{datetime.datetime.now()}")
+
+        self.add_argument_group(title="Others")
         self.add_argument("-p", "--processes",
                           help="Number of parallel processes to use [Default:4]",
                           type=int,
                           metavar="",
                           default=4)
+        self.add_argument("-tmp","--tmpdir",
+                          help="Temporary directory",
+                          metavar="",
+                          default=f"tmp_{datetime.datetime.now()}")
         self.add_argument("-l","--log_level",
                           help="[default: info]",
                           default="info",
