@@ -35,47 +35,48 @@ class UTRpyArgparser(argparse.ArgumentParser):
                           help="Annotation from transcriptome assembly (GFF/GTF)")
         self.add_argument("outdir",
                           help="Output directory (Must not exist already)")
-        self.add_argument("-pp","--pinky_promise",
-                          help="Pinky promise that prediction is correct (Will fix it otherwise)",
-                          metavar="")
         
-        self.add_argument_group(title="Transcript matching")
-        self.add_argument("-m", "--match",
+        grp1 = self.add_argument_group(title="Transcript matching")
+        grp1.add_argument("-m", "--match",
                           help="What exons of predicted transcripts to match"
                           " [choices: ends, all] [default: all]",
                           metavar="",
                           choices=["ends", "all"],
                           default="all")
-        self.add_argument("-ks","--know_strand",
+        grp1.add_argument("-ks","--know_strand",
                           action="store_true",
                           help="Use only transcripts where the strand is known")
-        self.add_argument("-me","--max_exon_length",
+        grp1.add_argument("-me","--max_exon_length",
                           help="Don't use assembled transcripts with exons longer than this [default: 20000]",
                           metavar="",
                           type=int,
                           default=20000)
         
-        self.add_argument_group(title="UTR-variant selection")
-        self.add_argument("-s", "--select",
+        grp2 = self.add_argument_group(title="UTR-variant selection",
+                                description="UTR-variant selection")
+        grp2.add_argument("-s", "--select",
                           help="How to select UTR-variants if there are multiple [choices: shortest, longest, all] [default: all]",
                           choices=["shortest", "longest", "all"],
                           default="all",
                           metavar="",)
-        self.add_argument("-k","--keep",
+        grp2.add_argument("-k","--keep",
                           help="Keep the original transcript instead of deleting them",
                           metavar="",)
 
-        self.add_argument_group(title="Others")
-        self.add_argument("-p", "--processes",
+        grp3 = self.add_argument_group(title="Others")
+        grp3.add_argument("-p", "--processes",
                           help="Number of parallel processes to use [Default:4]",
                           type=int,
                           metavar="",
                           default=4)
-        self.add_argument("-tmp","--tmpdir",
+        grp3.add_argument("-pp","--pinky_promise",
+                          help="The predicted annotation is guaranteed to be well-formated",
+                          metavar="")
+        grp3.add_argument("-tmp","--tmpdir",
                           help="Temporary directory",
                           metavar="",
                           default=f"tmp_{datetime.datetime.now()}")
-        self.add_argument("-l","--log_level",
+        grp3.add_argument("-l","--log_level",
                           help="[default: info]",
                           default="info",
                           metavar="")
