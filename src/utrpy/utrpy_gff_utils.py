@@ -7,8 +7,10 @@ Description:    Functions for pandas.Dataframe represented GFF-files
                 - empty_gff() -> pandas.DataFrame
                 - get_ancestor(gff: pandas.DataFrame, feature: pandas.Series, type: str) -> pandas.Series:
                 - features_overlap(feature_1, feature_2) -> bool
+                - is_subfeature(gff: pandas.DataFrame, feature_1: pandas.Series, feature_2: pandas.Series) -> bool
                 - load_gff(file_path: str) -> pandas.DataFrame
                 - seqname_split(gff: pandas.DataFrame, seqnames=None) -> dict[str, pandas.DataFrame]
+                - sub_features(gff: pandas.DataFrame, feature: pandas.Series) -> pandas.DataFrame
                 - write_gff(gff: pandas.DataFrame, file_path: str) -> None
 Author:         Simon Hegele
 Date:           2025-04-01
@@ -134,6 +136,12 @@ def included_features(gff: pandas.DataFrame,
 
     return prefiltered[mask_includes]
 
+def is_subfeature(gff: pandas.DataFrame,
+                  feature_1: pandas.Series,
+                  feature_2: pandas.Series) -> bool:
+
+    return feature_2.equals(get_ancestor(gff, feature_1, feature_2["type"]))
+
 def overlapping_features(gff: pandas.DataFrame,
                          feature: pandas.Series,
                          type="") -> pandas.DataFrame:
@@ -157,6 +165,12 @@ def seqname_split(gff: pandas.DataFrame, seqnames=None) -> dict[str, pandas.Data
             .sort_values("start")
             .reset_index(drop=True)
             for seqname in seqnames}
+
+def sub_features(gff: pandas.DataFrame, feature: pandas.Series) -> pandas.DataFrame:
+
+    prefiltered = overlapping_features(gff, feature)
+
+    return prefiltered.apply(lambda f: is_subfeature(prefiltered, f, feature))
 
 def write_gff(gff: pandas.DataFrame, file_path: str) -> None:
 
