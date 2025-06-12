@@ -71,6 +71,7 @@ class UTRpyArgparser(argparse.ArgumentParser):
                           default=4)
         grp3.add_argument("-pp","--pinky_promise",
                           help="The predicted annotation is guaranteed to be well-formated",
+                          action="store_true",
                           metavar="")
         grp3.add_argument("-tmp","--tmpdir",
                           help="Temporary directory",
