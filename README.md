@@ -100,6 +100,8 @@ Screenshot from the IGV-genome browser
 </p>
 Screenshot from the IGV-genome browser.
 
+- UTRs are only explicitly annotated if start and stop codons are included in the provided annotation.
+
 ## 6 Future plans / ideas
 
 Performance:
@@ -111,4 +113,6 @@ Limitations:
     1. Identification of potential gene fusion
        -> Sufficient to guide manual curation.
     2. Automatically merging fused genes.
+- Explicit UTR-annotation:
+    Adding a feature that can extract start and stop codons from a provided reference genome 
  
