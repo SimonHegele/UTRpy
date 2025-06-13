@@ -100,6 +100,7 @@ Screenshot from the IGV-genome browser
 </p>
 Screenshot from the IGV-genome browser.<br>
 <br>
+
 - UTRs are only explicitly annotated if start and stop codons are included in the provided annotation.
 
 ## 6 Future plans / ideas
