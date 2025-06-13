@@ -98,7 +98,7 @@ Screenshot from the IGV-genome browser
 <p align="center">
   <img src="figures/genefusion.png" width="800"/>
 </p>
-Screenshot from the IGV-genome browser.
+Screenshot from the IGV-genome browser.<br>
 
 - UTRs are only explicitly annotated if start and stop codons are included in the provided annotation.
 
