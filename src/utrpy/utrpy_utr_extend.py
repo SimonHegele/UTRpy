@@ -27,7 +27,7 @@ def update_gene_lengths(utr_variants: list, p_gff: pandas.DataFrame):
 
         i = variant["gene"].name
         p_gff.iloc[i,3] = min(p_gff.iloc[i,3], variant["transcript"]["start"].min())
-        p_gff.iloc[i,4] = min(p_gff.iloc[i,4], variant["transcript"]["end"].max())
+        p_gff.iloc[i,4] = max(p_gff.iloc[i,4], variant["transcript"]["end"].max())
 
 def delete_original_transcripts(p_gff: pandas.DataFrame,
                                 to_delete: list[Transcript]):
