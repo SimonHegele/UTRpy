@@ -93,7 +93,7 @@ Screenshot from the IGV-genome browser
 
 ## 5 Limitations / Known issues
 
-- Gene fusions are not recognized as such and can result in overlapping duplicated genes (rare)
+- UTRpy does not address potential gene fusions and AGAT migth overlook them as well
 
 <p align="center">
   <img src="figures/genefusion.png" width="800"/>
