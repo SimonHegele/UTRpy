@@ -5,21 +5,24 @@ Description:    Functions for pandas.Dataframe represented GFF-files
                 - attributes_str(attributes: dict[str, str]) -> str
                 - check_strands(feature1: pandas.Series, feature2: pandas.Series, know_strand=False) -> bool
                 - empty_gff() -> pandas.DataFrame
-                - get_ancestor(gff: pandas.DataFrame, feature: pandas.Series, type: str) -> pandas.Series:
+                - get_ancestor(gff: pandas.DataFrame, feature: pandas.Series, type: str) -> pandas.Series
+                - get_descendants(gff: pandas.DataFrame, feature: pandas.Series) -> pandas.DataFrame
                 - features_overlap(feature_1, feature_2) -> bool
-                - is_subfeature(gff: pandas.DataFrame, feature_1: pandas.Series, feature_2: pandas.Series) -> bool
                 - load_gff(file_path: str) -> pandas.DataFrame
+                - is_descendant(gff: pandas.DataFrame, feature_1: pandas.Series, feature_2: pandas.Series) -> bool
                 - seqname_split(gff: pandas.DataFrame, seqnames=None) -> dict[str, pandas.DataFrame]
-                - sub_features(gff: pandas.DataFrame, feature: pandas.Series) -> pandas.DataFrame
+                - type_split(gff: pandas.DataFrame, type: str) -> typing.Generator
                 - write_gff(gff: pandas.DataFrame, file_path: str) -> None
+                Functions are alphabetically sorted in this file
 Author:         Simon Hegele
 Date:           2025-04-01
-Version:        1.0
+Version:        1.1
 License:        GPL-3
 """
 
 import logging
 import pandas
+import typing
 
 gff_columns = ["seqname",
                "source",
@@ -61,7 +64,6 @@ def empty_gff() -> pandas.DataFrame:
     """
     Creates and returns an empty GFF-file
     """
-
     return pandas.DataFrame({}, columns = gff_columns)
 
 def get_ancestor(gff: pandas.DataFrame,
@@ -76,25 +78,38 @@ def get_ancestor(gff: pandas.DataFrame,
     ancestor = feature
 
     try:
-        for _ in range(5): 
+        for _ in range(5):
+
             if type==(ancestor["type"]):
                 return ancestor
+            
+            # Finding parent
             attrs = attributes_dict(ancestor)
             if f"{type}_id" in attrs.keys():
                 id = attrs[f"{type}_id"]
             elif "Parent" in attrs.keys():
                 id = attrs["Parent"]
+            else:
+                id = None
+            if not id:
+                return
             ancestor = gff[gff.apply(lambda f: attributes_dict(f)["ID"]==id, axis=1)].iloc[0]
-
-        logging.error(f"Failed to find ancestor of type {type} for {list(feature)}")
 
     except Exception as e:
 
         logging.error(f"Failed to find ancestor of type {type} for {list(feature)}\n{e}")
 
-def feature_includes(feature_1, feature_2):
+def get_descendants(gff: pandas.DataFrame, feature: pandas.Series) -> pandas.DataFrame:
+
+    prefiltered   = overlapping_features(gff, feature)
+    descends_mask = prefiltered.apply(lambda f: is_descendant(prefiltered, f, feature), axis=1)
+
+    return prefiltered[descends_mask]
+
+def feature_includes(feature_1: pandas.Series,
+                     feature_2: pandas.Series) -> bool:
     """
-    Checks if feature_1 includes feature_2
+    Checks if the genomic location of feature_1 includes the genomic location of feature_2
     """
 
     if not feature_1["seqname"] == feature_2["seqname"]:
@@ -105,7 +120,8 @@ def feature_includes(feature_1, feature_2):
         return False
     return True
 
-def features_overlap(feature_1, feature_2) -> bool:
+def features_overlap(feature_1: pandas.Series,
+                     feature_2: pandas.Series) -> bool:
     """
     Checks if two features overlap
     """
@@ -117,6 +133,20 @@ def features_overlap(feature_1, feature_2) -> bool:
             return True
     return False
 
+def feature_pairs(gff_1: pandas.DataFrame,
+                  gff_2: pandas.DataFrame,
+                  pairing: typing.Callable[[pandas.DataFrame, pandas.Series],pandas.DataFrame],
+                  type="") -> typing.Generator:
+    
+    gff_1_features = gff_1.loc[gff_1["type"].str.contains(type, regex=False)]
+    gff_2_features = gff_2.loc[gff_2["type"].str.contains(type, regex=False)]
+
+    for i, gff_1_feature in gff_1_features.iterrows():
+
+        for j, gff_2_feature in pairing(gff_2_features, gff_1_feature).iterrows():
+
+            yield gff_1_feature, gff_2_feature
+    
 def load_gff(file_path: str) -> pandas.DataFrame:
     """
     Loading a GFF-file from the file-system
@@ -132,14 +162,27 @@ def included_features(gff: pandas.DataFrame,
     mask_seqname  = gff["seqname"] == feature["seqname"]
     mask_type     = gff["type"].str.contains(type, regex=False)
     prefiltered   = gff[mask_seqname & mask_type]
+    mask_includes = prefiltered.apply(lambda f: feature_includes(feature, f), axis=1)
+
+    return prefiltered[mask_includes]
+
+def including_features(gff: pandas.DataFrame,
+                      feature: pandas.Series,
+                      type=""):
+    """
+    Returns features of the specified type from the input GFF included by the input feature 
+    """
+    mask_seqname  = gff["seqname"] == feature["seqname"]
+    mask_type     = gff["type"].str.contains(type, regex=False)
+    prefiltered   = gff[mask_seqname & mask_type]
     mask_includes = prefiltered.apply(lambda f: feature_includes(f, feature), axis=1)
 
     return prefiltered[mask_includes]
 
-def is_subfeature(gff: pandas.DataFrame,
+def is_descendant(gff: pandas.DataFrame,
                   feature_1: pandas.Series,
                   feature_2: pandas.Series) -> bool:
-
+    
     return feature_2.equals(get_ancestor(gff, feature_1, feature_2["type"]))
 
 def overlapping_features(gff: pandas.DataFrame,
@@ -156,7 +199,8 @@ def overlapping_features(gff: pandas.DataFrame,
 
     return prefiltered[mask_overlap]
 
-def seqname_split(gff: pandas.DataFrame, seqnames=None) -> dict[str, pandas.DataFrame]:
+def seqname_split(gff: pandas.DataFrame,
+                  seqnames=None) -> dict[str, pandas.DataFrame]:
 
     if seqnames is None:
         seqnames = gff["seqname"].unique()
@@ -166,12 +210,12 @@ def seqname_split(gff: pandas.DataFrame, seqnames=None) -> dict[str, pandas.Data
             .reset_index(drop=True)
             for seqname in seqnames}
 
-def sub_features(gff: pandas.DataFrame, feature: pandas.Series) -> pandas.DataFrame:
+def type_split(gff: pandas.DataFrame, type: str) -> typing.Generator:
+    
+    for i, feature in gff.loc[gff["type"].str.contains(type, regex=False)].iterrows():
 
-    prefiltered = overlapping_features(gff, feature)
+        yield get_descendants(gff, feature)
 
-    return prefiltered.apply(lambda f: is_subfeature(prefiltered, f, feature))
+def write_gff(gff: pandas.DataFrame, file_path: str, mode="w") -> None:
 
-def write_gff(gff: pandas.DataFrame, file_path: str) -> None:
-
-    gff.to_csv(file_path, sep="\t", index=False, header=None)
+    gff.to_csv(file_path, sep="\t", index=False, header=None, mode=mode)
