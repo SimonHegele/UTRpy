@@ -13,9 +13,9 @@ from .utrpy_utr_extend       import utr_extend_threaded
 
 def main():
 
-    args = UTRpyArgparser().parse_args()
-
     logging_setup(args)
+
+    args = UTRpyArgparser().parse_args()
 
     logging.info("Preprocessing with AGAT")
     agat_prepare(args)
