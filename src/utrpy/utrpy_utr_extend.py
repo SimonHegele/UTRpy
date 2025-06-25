@@ -19,7 +19,7 @@ def select_from_variants(variants: list[dict], select: str):
         case "shortest":
             return [variants[lengths.index(numpy.min(lengths))]]
         case "longest":
-            return [variants[lengths.index(numpy.min(lengths))]]
+            return [variants[lengths.index(numpy.max(lengths))]]
         
 def update_gene_lengths(utr_variants: list, p_gff: pandas.DataFrame):
 
