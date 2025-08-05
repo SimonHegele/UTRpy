@@ -1,3 +1,5 @@
+Archived: UTRpy will be continued as LUTR (https://github.com/SimonHegele/LUTR)
+
 <p align="center">
   <img src="figures/UTRpyLogo.png" width="300"/>
 </p>
